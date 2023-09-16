@@ -8,22 +8,37 @@ var date = dayjs().format("M/D/YYYY");
 var cityName;
 var lat;
 var lon;
-
+var cityHistory = [];
 var apiKey = '81aaa12f876e407b2a7bb37f4c2cf924'
 
 var unit = 'imperial';
 
-function changeUnit() {
-    unit = 'metric'
-}
 
+function getHistory(){
+    historyEl.empty();
+    currentWeatherEl.empty();
+    for(let i = 0; i < cityHistory.length; i++){
+        var historyBtn = $('<button>').addClass("btn btn-secondary btn-lg w-100 mt-3 history-btn");
+
+        historyBtn.attr('type','button')
+        historyBtn.text(cityHistory[i]);
+
+        historyEl.append(historyBtn);     
+    }
+    $('.history-btn').on('click', function () {
+          
+        city = $(this).text();
+        
+        todayForecast();
+    })
+}
 function todayForecast() {
 
     currentWeatherEl.empty()
 
     var currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=" + unit + "&appid=" + apiKey;
 
-
+    
 
     $.ajax({
         url: currentWeatherQueryURL,
@@ -72,22 +87,16 @@ function getLocation() {
 }
 
 function fiveDayforecast() {
-    console.log(lat);
-    console.log(lon);
-
     var fiveDayForecastQueryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&units=' + unit + '&appid=' + apiKey;
-
     $.ajax({
         url: fiveDayForecastQueryUrl,
         method: 'GET'
     }).then(function (forecast) {
         console.log(forecast)
         forecastListEl.empty()
-        for (let i = 1; i < forecast.list.length + 1; i++) {
+        for (let i = 1; i < forecast.list.length; i++) {
             if (forecast.list[i].dt_txt.split(' ')[1] === '21:00:00') {
                 var forecastDay = forecast.list[i]
-
-                console.log(forecastDay);
                 
                 var forecastCard = $('<div>').addClass('card m-3 bg-dark text-light custom-card');
                 forecastListEl.append(forecastCard);
@@ -115,15 +124,18 @@ function fiveDayforecast() {
     })
 }
 
+function changeUnit() {
+    unit = 'metric'
+}
 
 searchBtn.on('click', function () {
     city = citySearchEl.val();
+    cityHistory.push(city)
+    //localStorage.setItem('city', JSON.stringify(cityHistory));
+    console.log(cityHistory);
+    getHistory();
     todayForecast();
 })
 
-$('.historybtn').on('click', function () {
-    city = $(this).text();
-    todayForecast();
-})
 
 
