@@ -127,7 +127,9 @@ function fiveDayforecast() {
                 forecastCard.append(forecastHumidity);
             }
         }
+        citySearchEl.val('')
     })
+    
 }
 
 function changeUnit() {

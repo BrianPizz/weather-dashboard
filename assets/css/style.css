@@ -1,8 +1,17 @@
-.custom-card{
-    width: 20%;
-    padding: 10px;
+*{
+    font-size: 16px;
 }
 img{
     max-width: 25%;
     height: auto;
+}
+.custom-header{
+    background: linear-gradient(90deg, rgba(16,49,219,1) 60%, rgba(227,249,240,1) 100%);
+}
+h1{
+    margin-right: 30%;
+}
+.custom-card{
+    width: 20%;
+    padding: 10px;
 }
