@@ -8,9 +8,6 @@ var date = dayjs().format("M/D/YYYY");
 var cityName;
 var lat;
 var lon;
-var currentTemp;
-var currentWind;
-var currentHumidity;
 
 var apiKey = '81aaa12f876e407b2a7bb37f4c2cf924'
 
@@ -38,15 +35,19 @@ function todayForecast() {
         cityName.text(data.name + ',' + ' ')
         currentWeatherEl.append(cityName);
 
-        currentTemp = $('<p>');
+        var currentIcon = $('<img>').attr('src','https://openweathermap.org/img/wn/' + data.weather[0].icon + '@2x.png');
+        currentWeatherEl.append(currentIcon)
+
+
+        var currentTemp = $('<p>');
         currentTemp.text("Temp: " + data.main.temp + "°F");
         currentWeatherEl.append(currentTemp);
 
-        currentWind = $('<p>');
+        var currentWind = $('<p>');
         currentWind.text("Wind: " + data.wind.speed + " MPH")
         currentWeatherEl.append(currentWind);
 
-        currentHumidity = $('<p>');
+        var currentHumidity = $('<p>');
         currentHumidity.text("Humidity: " + data.main.humidity + "%");
         currentWeatherEl.append(currentHumidity);
 
@@ -82,7 +83,7 @@ function fiveDayforecast() {
     }).then(function (forecast) {
         console.log(forecast)
         forecastListEl.empty()
-        for (let i = 1; i < forecast.list.length; i++) {
+        for (let i = 1; i < forecast.list.length + 1; i++) {
             if (forecast.list[i].dt_txt.split(' ')[1] === '21:00:00') {
                 var forecastDay = forecast.list[i]
 
@@ -100,7 +101,15 @@ function fiveDayforecast() {
 
                 var forecastTemp = $('<p>');
                 forecastTemp.text('Temp: ' + forecastDay.main.temp + '°F');
-                forecastCard.append(forecastTemp)
+                forecastCard.append(forecastTemp);
+
+                var forecastWind = $('<p>');
+                forecastWind.text('Wind: ' + forecastDay.wind.speed + 'MPH');
+                forecastCard.append(forecastWind);
+
+                var forecastHumidity = $('<p>');
+                forecastHumidity.text('Humiditiy: ' + forecastDay.main.humidity + '%');
+                forecastCard.append(forecastHumidity);
             }
         }
     })
