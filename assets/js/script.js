@@ -3,6 +3,7 @@ var searchBtn = $('#search');
 var currentWeatherEl = $('#current-weather');
 var historyEl = $('#history');
 var forecastListEl = $('#forecast');
+var city;
 var date = dayjs().format("M/D/YYYY");
 var cityName;
 var lat;
@@ -19,28 +20,11 @@ function changeUnit(){
     unit = 'metric'
 } 
 
-function getLocation(){
-    city = citySearchEl.val();
-    var locationQueryUrl = 'http://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=&appid=' + apiKey;
-    $.ajax({
-        url: locationQueryUrl,
-        method: 'GET'
-    }).then(function(response){
-        console.log(response[0]);
-        cityName.append(response[0].state + ' ' + date);
-        lat = response[0].lat;
-        lon = response[0].lon;
-
-        fiveDayforecast()
-    })
-}
-
 function todayForecast() {
 
     currentWeatherEl.empty()
 
-    var city = citySearchEl.val();
-    var currentWeatherQueryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=" + unit + "&appid=" + apiKey;
+    var currentWeatherQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=" + unit + "&appid=" + apiKey;
 
     
 
@@ -70,12 +54,49 @@ function todayForecast() {
     })
 };
 
+function getLocation(){
+    
+    var locationQueryUrl = 'https://api.openweathermap.org/geo/1.0/direct?q=' + city + '&limit=&appid=' + apiKey;
+    $.ajax({
+        url: locationQueryUrl,
+        method: 'GET'
+    }).then(function(response){
+        console.log(response[0]);
+        cityName.append(response[0].state + ' ' + date);
+        lat = response[0].lat;
+        lon = response[0].lon;
+
+        fiveDayforecast()
+    })
+}
+
 function fiveDayforecast(){
     console.log(lat);
     console.log(lon);
-
     
+    var fiveDayForecastQueryUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat + '&lon=' + lon + '&units=' + unit + '&appid=' + apiKey;
+
+    $.ajax({
+        url: fiveDayForecastQueryUrl,
+        method: 'GET'
+    }).then(function(forecast){
+        for(let i = 0; i < forecast.list.length; i++)
+        
+        if(forecast.list[i].dt_txt.split(' ')[1] === '12:00:00'){
+            console.log(forecast.list[i])
+        }
+    })
 }
 
 
-searchBtn.on('click', todayForecast)
+searchBtn.on('click', function(){
+    city = citySearchEl.val();
+    todayForecast();
+})
+
+$('.historybtn').on('click', function(){
+    city = $(this).text();
+    todayForecast();
+})
+
+
