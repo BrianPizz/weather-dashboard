@@ -16,6 +16,12 @@ var unit = 'imperial';
 
 function getHistory(){
     historyEl.empty();
+
+    cityHistory = JSON.parse(localStorage.getItem('city'));
+    if(cityHistory === null){
+        return;
+    }
+
     currentWeatherEl.empty();
     for(let i = 0; i < cityHistory.length; i++){
         var historyBtn = $('<button>').addClass("btn btn-secondary btn-lg w-100 mt-3 history-btn");
@@ -129,13 +135,27 @@ function changeUnit() {
 }
 
 searchBtn.on('click', function () {
+    if(citySearchEl.val() === ''){
+        return
+    }
     city = citySearchEl.val();
-    cityHistory.push(city)
-    //localStorage.setItem('city', JSON.stringify(cityHistory));
+
+    if(cityHistory === null){
+        cityHistory = [city]
+    } else {
+        cityHistory.push(city);
+    }
+    
+    localStorage.setItem('city', JSON.stringify(cityHistory));
     console.log(cityHistory);
     getHistory();
     todayForecast();
 })
 
+$('#clear').on('click', function(){
+    localStorage.clear();
+    cityHistory = []
+    historyEl.empty();
+})
 
-
+getHistory();
