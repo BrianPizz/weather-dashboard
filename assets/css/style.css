@@ -11,8 +11,11 @@ img{
 h1{
     margin-right: 30%;
 }
+.toggle-menu{
+    width: 100%;
+    justify-content: center;
+}
 .switch{
-    margin: 5% 0 0 5%;
     position: relative;
     width: 60px;
     height: 35px;
@@ -27,6 +30,7 @@ h1{
     background-color: #ccc;
     transition: .4s;
     border-radius: 34px;
+    width: 60px;
 }
 .switch input {
     display: none;
@@ -42,16 +46,6 @@ h1{
     transition: 0.4s;
     border-radius: 50px;
 }
-.f{
-    margin: 5% 0 0 32%;
-    font-size: 24px;
-}
-.c{
-    margin: 5% 0 0 5%;
-    font-size: 24px;
-}
-
-
 input:checked + .slider{
     background-color: blue;
 }

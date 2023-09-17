@@ -12,7 +12,15 @@ var cityHistory = [];
 var apiKey = '81aaa12f876e407b2a7bb37f4c2cf924'
 
 var unit = 'imperial';
+var unitLabelTemp = '°F'
+var unitLabelSpeed = 'MPH'
 
+
+function initLoad(){
+    getHistory();
+    city = 'Columbus';
+    todayForecast();
+};
 
 function getHistory(){
     historyEl.empty();
@@ -61,11 +69,11 @@ function todayForecast() {
 
 
         var currentTemp = $('<p>');
-        currentTemp.text("Temp: " + data.main.temp + "°F");
+        currentTemp.text("Temp: " + data.main.temp + unitLabelTemp);
         currentWeatherEl.append(currentTemp);
 
         var currentWind = $('<p>');
-        currentWind.text("Wind: " + data.wind.speed + " MPH")
+        currentWind.text("Wind: " + data.wind.speed + " " + unitLabelSpeed)
         currentWeatherEl.append(currentWind);
 
         var currentHumidity = $('<p>');
@@ -115,11 +123,11 @@ function fiveDayforecast() {
                 forecastCard.append(forecastIcon);
 
                 var forecastTemp = $('<p>');
-                forecastTemp.text('Temp: ' + forecastDay.main.temp + '°F');
+                forecastTemp.text('Temp: ' + forecastDay.main.temp + unitLabelTemp);
                 forecastCard.append(forecastTemp);
 
                 var forecastWind = $('<p>');
-                forecastWind.text('Wind: ' + forecastDay.wind.speed + 'MPH');
+                forecastWind.text('Wind: ' + forecastDay.wind.speed + ' ' + unitLabelSpeed);
                 forecastCard.append(forecastWind);
 
                 var forecastHumidity = $('<p>');
@@ -160,4 +168,16 @@ $('#clear').on('click', function(){
     historyEl.empty();
 })
 
-getHistory();
+$('input[name=checkbox]').change(function(){
+    if($(this).is(':checked')){
+        unit = 'metric';
+        unitLabelTemp = '°C';
+        unitLabelSpeed = 'KM/PH';
+    } else {
+        unit = 'imperial';
+        unitLabelTemp = '°F';
+        unitLabelSpeed = 'MPH';
+    }
+})
+
+initLoad();
