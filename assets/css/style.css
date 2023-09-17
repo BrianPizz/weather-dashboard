@@ -56,6 +56,10 @@ input:checked + .slider{
 input:checked + .slider:before{
 transform: translateX(25px);
 }
+.custom-text{
+    font-size: 1.3rem;
+    font-weight: 500;
+}
 .custom-card{
     width: 20%;
     padding: 10px;

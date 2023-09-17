@@ -68,15 +68,15 @@ function todayForecast() {
         currentWeatherEl.append(currentIcon)
 
 
-        var currentTemp = $('<p>');
+        var currentTemp = $('<p>').addClass('custom-text');
         currentTemp.text("Temp: " + data.main.temp + unitLabelTemp);
         currentWeatherEl.append(currentTemp);
 
-        var currentWind = $('<p>');
+        var currentWind = $('<p>').addClass('custom-text');
         currentWind.text("Wind: " + data.wind.speed + " " + unitLabelSpeed)
         currentWeatherEl.append(currentWind);
 
-        var currentHumidity = $('<p>');
+        var currentHumidity = $('<p>').addClass('custom-text');
         currentHumidity.text("Humidity: " + data.main.humidity + "%");
         currentWeatherEl.append(currentHumidity);
 
@@ -173,10 +173,12 @@ $('input[name=checkbox]').change(function(){
         unit = 'metric';
         unitLabelTemp = '°C';
         unitLabelSpeed = 'KM/PH';
+        todayForecast();
     } else {
         unit = 'imperial';
         unitLabelTemp = '°F';
         unitLabelSpeed = 'MPH';
+        todayForecast();
     }
 })
 
