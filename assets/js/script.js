@@ -58,7 +58,6 @@ function todayForecast() {
         url: currentWeatherQueryURL,
         method: 'GET',
     }).then(function (data) {
-        console.log(data);
 
         cityName = $('<h2>');
         cityName.text(data.name + ',' + ' ')
@@ -91,8 +90,7 @@ function getLocation() {
         url: locationQueryUrl,
         method: 'GET'
     }).then(function (response) {
-        console.log(response[0]);
-        cityName.append(response[0].state + ' ' + date);
+        cityName.append(response[0].state + ' ' + '-' + ' ' + date);
         lat = response[0].lat;
         lon = response[0].lon;
 
@@ -106,7 +104,6 @@ function fiveDayforecast() {
         url: fiveDayForecastQueryUrl,
         method: 'GET'
     }).then(function (forecast) {
-        console.log(forecast)
         forecastListEl.empty()
         for (let i = 1; i < forecast.list.length; i++) {
             if (forecast.list[i].dt_txt.split(' ')[1] === '21:00:00') {
@@ -157,7 +154,6 @@ searchBtn.on('click', function () {
     }
     
     localStorage.setItem('city', JSON.stringify(cityHistory));
-    console.log(cityHistory);
     getHistory();
     todayForecast();
 })
