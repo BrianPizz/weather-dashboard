@@ -1,3 +1,4 @@
+/* universal style */
 *{
     font-size: 16px;
 }
@@ -5,16 +6,19 @@ body{
     background: linear-gradient(135deg, rgba(16,49,219,1) 0%, rgba(227,249,240,1) 74%, rgba(255,250,16,1) 100%);
     margin-bottom: 10%;
 }
+/* icon sizing */
 img{
     max-width: 25%;
     height: auto;
 }
+/* header background */
 .custom-header{
     background: linear-gradient(90deg, rgba(16,49,219,1) 60%, rgba(227,249,240,1) 100%);
 }
 h1{
     margin-right: 30%;
 }
+/* toggle switch */
 .toggle-menu{
     width: 100%;
     justify-content: center;
@@ -56,10 +60,12 @@ input:checked + .slider{
 input:checked + .slider:before{
 transform: translateX(25px);
 }
+/* current weather text */
 .custom-text{
     font-size: 1.3rem;
     font-weight: 500;
 }
+/* forecast cards */
 .custom-card{
     width: 20%;
     padding: 10px;
